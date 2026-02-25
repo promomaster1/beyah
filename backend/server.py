@@ -172,7 +172,7 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
     
     return User(**user_doc)
 
-async def require_role(required_roles: List[UserRole]):
+def require_role(required_roles: List[UserRole]):
     async def role_checker(current_user: User = Depends(get_current_user)):
         if current_user.role not in required_roles:
             raise HTTPException(status_code=403, detail="Not enough permissions")
