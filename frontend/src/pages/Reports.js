@@ -39,17 +39,16 @@ const Reports = () => {
     try {
       toast.info('جارٍ إنشاء التقرير...');
       
-      // Capture the report content as image using html2canvas
-      const canvas = await html2canvas(reportRef.current, {
-        scale: 3, // Increased scale for better quality
-        useCORS: true,
-        logging: false,
-        backgroundColor: '#ffffff',
-        width: reportRef.current.scrollWidth,
-        height: reportRef.current.scrollHeight
-      });
+      // Get all page-break elements
+      const pageBreakElements = reportRef.current.querySelectorAll('.page-break-after');
+      
+      if (pageBreakElements.length === 0) {
+        // Fallback to single capture if no page breaks
+        await generateSinglePagePDF();
+        return;
+      }
 
-      const imgData = canvas.toDataURL('image/png');
+      // Create PDF
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -59,28 +58,64 @@ const Reports = () => {
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      
-      // Calculate dimensions to fit page width
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = pdfWidth / imgWidth;
-      
-      const scaledWidth = pdfWidth;
-      const scaledHeight = imgHeight * ratio;
 
-      let position = 0;
-      let heightLeft = scaledHeight;
+      let isFirstPage = true;
 
-      // Add first page
-      pdf.addImage(imgData, 'PNG', 0, position, scaledWidth, scaledHeight, undefined, 'FAST');
-      heightLeft -= pdfHeight;
+      // Process each section separately
+      for (let i = 0; i < pageBreakElements.length; i++) {
+        const element = pageBreakElements[i];
+        
+        // Capture this section
+        const canvas = await html2canvas(element, {
+          scale: 2.5,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff',
+          windowWidth: 1200
+        });
 
-      // Add additional pages if needed
-      while (heightLeft > 0) {
-        position = heightLeft - scaledHeight;
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        
+        // Calculate dimensions
+        const ratio = pdfWidth / imgWidth;
+        const scaledWidth = pdfWidth;
+        const scaledHeight = imgHeight * ratio;
+
+        // Add new page if not first
+        if (!isFirstPage) {
+          pdf.addPage();
+        }
+        isFirstPage = false;
+
+        // Add image to PDF
+        pdf.addImage(imgData, 'PNG', 0, 0, scaledWidth, Math.min(scaledHeight, pdfHeight), undefined, 'FAST');
+      }
+
+      // Capture remaining content (detailed axes)
+      const detailedAxes = reportRef.current.querySelectorAll('.page-break-before');
+      for (let i = 0; i < detailedAxes.length; i++) {
+        const element = detailedAxes[i];
+        
+        const canvas = await html2canvas(element, {
+          scale: 2.5,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff',
+          windowWidth: 1200
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = canvas.width;
+        const imgHeight = canvas.height;
+        
+        const ratio = pdfWidth / imgWidth;
+        const scaledWidth = pdfWidth;
+        const scaledHeight = imgHeight * ratio;
+
         pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, scaledWidth, scaledHeight, undefined, 'FAST');
-        heightLeft -= pdfHeight;
+        pdf.addImage(imgData, 'PNG', 0, 0, scaledWidth, Math.min(scaledHeight, pdfHeight), undefined, 'FAST');
       }
 
       // Save PDF
@@ -92,6 +127,51 @@ const Reports = () => {
     } finally {
       setGenerating(false);
     }
+  };
+
+  const generateSinglePagePDF = async () => {
+    // Fallback method for single capture
+    const canvas = await html2canvas(reportRef.current, {
+      scale: 2.5,
+      useCORS: true,
+      logging: false,
+      backgroundColor: '#ffffff',
+      width: reportRef.current.scrollWidth,
+      height: reportRef.current.scrollHeight,
+      windowWidth: 1200
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+      compress: true
+    });
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+    const ratio = pdfWidth / imgWidth;
+    const scaledWidth = pdfWidth;
+    const scaledHeight = imgHeight * ratio;
+
+    let position = 0;
+    let heightLeft = scaledHeight;
+
+    pdf.addImage(imgData, 'PNG', 0, position, scaledWidth, scaledHeight, undefined, 'FAST');
+    heightLeft -= pdfHeight;
+
+    while (heightLeft > 0) {
+      position = heightLeft - scaledHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, scaledWidth, scaledHeight, undefined, 'FAST');
+      heightLeft -= pdfHeight;
+    }
+
+    pdf.save(`تقرير-جمعية-البيئة-${year}.pdf`);
+    toast.success('تم توليد التقرير بنجاح! 📄');
   };
 
   if (loading) {
