@@ -17,6 +17,7 @@ const AxisDetails = () => {
 
   useEffect(() => {
     loadAxisDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [axisId, year]);
 
   const loadAxisDetails = async () => {
