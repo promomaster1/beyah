@@ -245,14 +245,6 @@ const Reports = () => {
           </div>
         </div>
       </div>
-
-      {/* Info */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h3 className="font-semibold text-blue-800 mb-2">💡 ملاحظة</h3>
-        <p className="text-sm text-blue-700">
-          يتضمن التقرير ملخصاً لجميع المحاور والمؤشرات للعام المختار. اضغط على زر "تحميل PDF" لتحميل التقرير بصيغة PDF مع دعم كامل للنصوص العربية.
-        </p>
-      </div>
     </div>
   );
 };
