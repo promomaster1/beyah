@@ -203,9 +203,9 @@ const Reports = () => {
           </div>
         </div>
 
-        {/* Detailed Axes */}
+        {/* Detailed Axes - Each axis starts on new page */}
         {reportData?.axes?.map((axisData, axisIndex) => (
-          <div key={axisData.axis.id} className="mb-12 break-inside-avoid">
+          <div key={axisData.axis.id} className="mb-12 page-break-before page-break-after page-break-inside-avoid">
             <div className="bg-gray-100 p-6 rounded-xl mb-6">
               <h3 className="text-2xl font-bold text-gray-800">
                 المحور {axisIndex + 1}: {axisData.axis.name_ar}
@@ -213,7 +213,7 @@ const Reports = () => {
             </div>
 
             {/* Performance Indicators */}
-            <div className="mb-6">
+            <div className="mb-6 page-break-inside-avoid">
               <h4 className="text-xl font-semibold text-blue-700 mb-4 border-b-2 border-blue-200 pb-3">
                 📊 مؤشرات الأداء
               </h4>
@@ -221,7 +221,7 @@ const Reports = () => {
                 {axisData.indicators
                   ?.filter(i => i.indicator.type === 'performance')
                   ?.map((item, idx) => (
-                    <div key={item.indicator.id} className="flex justify-between items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
+                    <div key={item.indicator.id} className="flex justify-between items-center p-4 bg-blue-50 rounded-lg border border-blue-100 page-break-inside-avoid">
                       <div className="flex-1">
                         <p className="text-base font-medium text-gray-800 mb-1">{item.indicator.name_ar}</p>
                         <p className="text-sm text-gray-600">
@@ -242,7 +242,7 @@ const Reports = () => {
             </div>
 
             {/* Outcome Indicators */}
-            <div className="mb-6">
+            <div className="mb-6 page-break-inside-avoid">
               <h4 className="text-xl font-semibold text-purple-700 mb-4 border-b-2 border-purple-200 pb-3">
                 🎯 مؤشرات النتائج
               </h4>
@@ -250,7 +250,7 @@ const Reports = () => {
                 {axisData.indicators
                   ?.filter(i => i.indicator.type === 'outcome')
                   ?.map((item, idx) => (
-                    <div key={item.indicator.id} className="flex justify-between items-center p-4 bg-purple-50 rounded-lg border border-purple-100">
+                    <div key={item.indicator.id} className="flex justify-between items-center p-4 bg-purple-50 rounded-lg border border-purple-100 page-break-inside-avoid">
                       <div className="flex-1">
                         <p className="text-base font-medium text-gray-800 mb-1">{item.indicator.name_ar}</p>
                         <p className="text-sm text-gray-600">
