@@ -123,6 +123,41 @@
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
+/* Page break styles for PDF/Print */
+@media print {
+  .page-break-before {
+    page-break-before: always;
+    break-before: page;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+    break-after: page;
+  }
+
+  .page-break-inside-avoid {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
+/* Print container styles */
+.print-container {
+  width: 100%;
+}
+
+.print-container .page-break-before {
+  display: block;
+}
+
+.print-container .page-break-after {
+  display: block;
+}
+
+.print-container .page-break-inside-avoid {
+  display: block;
+}
+
 body {
     margin: 0;
     font-family:
