@@ -27,6 +27,7 @@ const Layout = () => {
     { path: '/dashboard', label: 'لوحة المعلومات', icon: '📊', roles: ['admin', 'data_entry', 'board_viewer'] },
     { path: '/data-entry', label: 'إدخال البيانات', icon: '✍️', roles: ['admin', 'data_entry'] },
     { path: '/manage-data', label: 'إدارة البيانات', icon: '📝', roles: ['admin', 'data_entry'] },
+    { path: '/manage-years', label: 'إدارة السنوات', icon: '📅', roles: ['admin'] },
     { path: '/targets', label: 'إدارة الأهداف', icon: '🎯', roles: ['admin'] },
     { path: '/indicators', label: 'إدارة المؤشرات', icon: '📈', roles: ['admin'] },
     { path: '/reports', label: 'التقارير', icon: '📄', roles: ['admin', 'board_viewer'] },
