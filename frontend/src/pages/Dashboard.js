@@ -70,7 +70,7 @@ const Dashboard = () => {
   return (
     <div className="space-y-6" data-testid="dashboard-page">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center animate-slide-down">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">لوحة المعلومات</h1>
           <p className="text-gray-600 mt-1">نظرة عامة على أداء المحاور</p>
@@ -79,7 +79,7 @@ const Dashboard = () => {
           <div className="flex items-center space-x-reverse space-x-2">
             <span className="text-sm text-gray-600">السنة:</span>
             <Select value={year.toString()} onValueChange={(v) => setYear(parseInt(v))}>
-              <SelectTrigger className="w-32" data-testid="year-selector">
+              <SelectTrigger className="w-32 bg-white/80 backdrop-blur-lg" data-testid="year-selector">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -93,10 +93,10 @@ const Dashboard = () => {
       </div>
 
       {/* Overall Score */}
-      <div className="bg-gradient-to-r from-green-500 to-blue-500 rounded-xl p-8 text-white shadow-lg">
+      <div className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 rounded-xl p-8 text-white shadow-lg hover:shadow-2xl transition-all duration-300 animate-scale-in">
         <div className="text-center">
           <p className="text-lg opacity-90 mb-2">الأداء الإجمالي</p>
-          <div className="text-6xl font-bold mb-2" data-testid="overall-score">
+          <div className="text-6xl font-bold mb-2 animate-float" data-testid="overall-score">
             {dashboardData?.overall_score?.toFixed(1)}%
           </div>
           <p className="text-sm opacity-90">للعام {year}</p>
