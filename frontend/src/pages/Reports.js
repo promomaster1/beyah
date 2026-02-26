@@ -53,7 +53,7 @@ const Reports = () => {
   return (
     <div className="space-y-6" data-testid="reports-page">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center no-print">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">التقارير السنوية</h1>
           <p className="text-gray-600 mt-1">عرض وتوليد التقارير</p>
@@ -78,9 +78,17 @@ const Reports = () => {
             disabled={generating || !reportData}
             data-testid="generate-pdf-button"
           >
-            {generating ? 'جارٍ التوليد...' : '📄 تحميل PDF'}
+            🖨️ طباعة / حفظ PDF
           </Button>
         </div>
+      </div>
+
+      {/* Info Box */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 no-print">
+        <h3 className="font-semibold text-blue-800 mb-2">💡 ملاحظة</h3>
+        <p className="text-sm text-blue-700">
+          اضغط على زر "طباعة / حفظ PDF" لفتح نافذة الطباعة. يمكنك اختيار "حفظ كـ PDF" من خيارات الطباعة للحصول على ملف PDF مع دعم كامل للنصوص العربية وفواصل الصفحات الصحيحة.
+        </p>
       </div>
 
       {/* Report Content - This will be captured for PDF */}
