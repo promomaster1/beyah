@@ -139,9 +139,9 @@ const Reports = () => {
       </div>
 
       {/* Report Content - This will be captured for PDF */}
-      <div ref={reportRef} className="bg-white p-12" style={{ minHeight: '1000px', maxWidth: '1200px', margin: '0 auto' }}>
-        {/* Header */}
-        <div className="text-center mb-12 pb-8 border-b-4 border-green-600">
+      <div ref={reportRef} className="bg-white p-12 print-container" style={{ minHeight: '1000px', maxWidth: '1200px', margin: '0 auto' }}>
+        {/* Header - Always on first page */}
+        <div className="text-center mb-12 pb-8 border-b-4 border-green-600 page-break-after">
           <div className="flex justify-center items-center mb-6">
             <img src="/logo.png" alt="جمعية البيئة بحائل" className="w-40 h-40" />
           </div>
@@ -150,8 +150,8 @@ const Reports = () => {
           <p className="text-2xl text-gray-600 font-medium">التقرير السنوي {year}</p>
         </div>
 
-        {/* Overall Score Section */}
-        <div className="mb-12">
+        {/* Overall Score Section - Always on second page */}
+        <div className="mb-12 page-break-after">
           <h3 className="text-3xl font-bold text-gray-800 mb-6 text-center">الأداء الإجمالي</h3>
           <div className="bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl p-12 text-white text-center">
             <div className="text-8xl font-bold mb-3" data-testid="report-overall-score">
@@ -161,8 +161,8 @@ const Reports = () => {
           </div>
         </div>
 
-        {/* Axes Summary */}
-        <div className="mb-12">
+        {/* Axes Summary - On separate page */}
+        <div className="mb-12 page-break-after">
           <h3 className="text-3xl font-bold text-gray-800 mb-6">ملخص المحاور</h3>
           <div className="grid grid-cols-1 gap-6">
             {reportData?.axes?.map((axisData, index) => {
@@ -171,7 +171,7 @@ const Reports = () => {
                 : 0;
               
               return (
-                <div key={axisData.axis.id} className="border-2 border-gray-200 rounded-xl p-6" data-testid={`report-axis-${index}`}>
+                <div key={axisData.axis.id} className="border-2 border-gray-200 rounded-xl p-6 page-break-inside-avoid" data-testid={`report-axis-${index}`}>
                   <div className="flex justify-between items-center mb-4">
                     <h4 className="text-2xl font-bold text-gray-800">{axisData.axis.name_ar}</h4>
                     <div className="text-left">
