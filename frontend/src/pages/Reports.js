@@ -15,6 +15,7 @@ const Reports = () => {
 
   useEffect(() => {
     loadReport();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [year]);
 
   const loadReport = async () => {
