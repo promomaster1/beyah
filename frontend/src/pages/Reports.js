@@ -151,45 +151,45 @@ const Reports = () => {
         </div>
 
         {/* Overall Score Section */}
-        <div className="mb-8">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4 text-center">الأداء الإجمالي</h3>
-          <div className="bg-gradient-to-r from-green-500 to-blue-500 rounded-xl p-8 text-white text-center">
-            <div className="text-7xl font-bold mb-2" data-testid="report-overall-score">
+        <div className="mb-12">
+          <h3 className="text-3xl font-bold text-gray-800 mb-6 text-center">الأداء الإجمالي</h3>
+          <div className="bg-gradient-to-r from-green-500 to-blue-500 rounded-2xl p-12 text-white text-center">
+            <div className="text-8xl font-bold mb-3" data-testid="report-overall-score">
               {reportData?.overall_score?.toFixed(1)}%
             </div>
-            <p className="text-xl">نسبة الإنجاز الكلية</p>
+            <p className="text-2xl font-medium">نسبة الإنجاز الكلية</p>
           </div>
         </div>
 
         {/* Axes Summary */}
-        <div className="mb-8">
-          <h3 className="text-2xl font-bold text-gray-800 mb-4">ملخص المحاور</h3>
-          <div className="grid grid-cols-1 gap-4">
+        <div className="mb-12">
+          <h3 className="text-3xl font-bold text-gray-800 mb-6">ملخص المحاور</h3>
+          <div className="grid grid-cols-1 gap-6">
             {reportData?.axes?.map((axisData, index) => {
               const avgAchievement = axisData.indicators?.length > 0
                 ? (axisData.indicators.reduce((sum, i) => sum + i.achievement_percent, 0) / axisData.indicators.length)
                 : 0;
               
               return (
-                <div key={axisData.axis.id} className="border-2 border-gray-200 rounded-lg p-4" data-testid={`report-axis-${index}`}>
-                  <div className="flex justify-between items-center mb-3">
-                    <h4 className="text-lg font-bold text-gray-800">{axisData.axis.name_ar}</h4>
-                    <div className="text-right">
-                      <div className={`text-2xl font-bold ${
+                <div key={axisData.axis.id} className="border-2 border-gray-200 rounded-xl p-6" data-testid={`report-axis-${index}`}>
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="text-2xl font-bold text-gray-800">{axisData.axis.name_ar}</h4>
+                    <div className="text-left">
+                      <div className={`text-3xl font-bold ${
                         avgAchievement >= 100 ? 'text-green-600' : 
                         avgAchievement >= 80 ? 'text-yellow-600' : 
                         'text-red-600'
                       }`}>
                         {avgAchievement.toFixed(1)}%
                       </div>
-                      <div className="text-xs text-gray-500">{axisData.indicators?.length || 0} مؤشر</div>
+                      <div className="text-base text-gray-500">{axisData.indicators?.length || 0} مؤشر</div>
                     </div>
                   </div>
                   
                   {/* Progress Bar */}
-                  <div className="w-full bg-gray-200 rounded-full h-3 mb-3">
+                  <div className="w-full bg-gray-200 rounded-full h-4 mb-4">
                     <div
-                      className={`h-3 rounded-full ${
+                      className={`h-4 rounded-full ${
                         avgAchievement >= 100 ? 'bg-green-600' : 
                         avgAchievement >= 80 ? 'bg-yellow-500' : 
                         'bg-red-500'
