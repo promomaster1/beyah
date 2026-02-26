@@ -139,16 +139,11 @@ const Reports = () => {
         {/* Header */}
         <div className="text-center mb-8 pb-6 border-b-2 border-green-600">
           <div className="flex justify-center items-center mb-4">
-            <div className="p-3 bg-green-100 rounded-full">
-              <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
+            <img src="/logo.png" alt="جمعية البيئة بحائل" className="w-32 h-32" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">نظام EPOS</h1>
-          <h2 className="text-2xl font-semibold text-green-600 mb-1">جمعية البيئة بحائل</h2>
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">جمعية البيئة بحائل</h1>
+          <h2 className="text-2xl font-semibold text-green-600 mb-1">نظام تتبع مؤشرات الأداء</h2>
           <p className="text-xl text-gray-600">التقرير السنوي {year}</p>
-          <p className="text-sm text-gray-500 mt-2">تاريخ الإصدار: {new Date().toLocaleDateString('ar-SA')}</p>
         </div>
 
         {/* Overall Score Section */}
