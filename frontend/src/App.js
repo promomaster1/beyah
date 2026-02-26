@@ -44,6 +44,7 @@ function App() {
               <Route path="axis/:axisId" element={<AxisDetails />} />
               <Route path="data-entry" element={<DataEntry />} />
               <Route path="manage-data" element={<ManageData />} />
+              <Route path="manage-years" element={<ManageYears />} />
               <Route path="targets" element={<Targets />} />
               <Route path="indicators" element={<Indicators />} />
               <Route path="reports" element={<Reports />} />
