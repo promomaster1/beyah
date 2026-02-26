@@ -139,15 +139,15 @@ const Reports = () => {
       </div>
 
       {/* Report Content - This will be captured for PDF */}
-      <div ref={reportRef} className="bg-white p-8" style={{ minHeight: '1000px' }}>
+      <div ref={reportRef} className="bg-white p-12" style={{ minHeight: '1000px', maxWidth: '1200px', margin: '0 auto' }}>
         {/* Header */}
-        <div className="text-center mb-8 pb-6 border-b-2 border-green-600">
-          <div className="flex justify-center items-center mb-4">
-            <img src="/logo.png" alt="جمعية البيئة بحائل" className="w-32 h-32" />
+        <div className="text-center mb-12 pb-8 border-b-4 border-green-600">
+          <div className="flex justify-center items-center mb-6">
+            <img src="/logo.png" alt="جمعية البيئة بحائل" className="w-40 h-40" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">جمعية البيئة بحائل</h1>
-          <h2 className="text-2xl font-semibold text-green-600 mb-1">نظام تتبع مؤشرات الأداء</h2>
-          <p className="text-xl text-gray-600">التقرير السنوي {year}</p>
+          <h1 className="text-5xl font-bold text-gray-800 mb-3">جمعية البيئة بحائل</h1>
+          <h2 className="text-3xl font-semibold text-green-600 mb-2">نظام تتبع مؤشرات الأداء</h2>
+          <p className="text-2xl text-gray-600 font-medium">التقرير السنوي {year}</p>
         </div>
 
         {/* Overall Score Section */}
