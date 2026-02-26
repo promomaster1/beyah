@@ -110,8 +110,9 @@ const Dashboard = () => {
             key={axisData.axis.id}
             to={`/axis/${axisData.axis.id}`}
             data-testid={`axis-card-${index}`}
+            style={{ animationDelay: `${index * 100}ms` }}
           >
-            <div className={`border-2 rounded-xl p-6 transition-all hover:shadow-lg cursor-pointer ${getStatusColor(axisData.status)}`}>
+            <div className={`border-2 rounded-xl p-6 transition-all duration-300 hover:shadow-xl cursor-pointer card-hover animate-slide-up ${getStatusColor(axisData.status)}`}>
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <h3 className="text-lg font-bold mb-2">{axisData.axis.name_ar}</h3>
@@ -119,7 +120,7 @@ const Dashboard = () => {
                     {axisData.indicators_count} مؤشر
                   </p>
                 </div>
-                <div className="text-3xl">
+                <div className="text-3xl animate-float">
                   {getStatusIcon(axisData.status)}
                 </div>
               </div>
