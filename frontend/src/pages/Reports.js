@@ -3,8 +3,6 @@ import { getAnnualReport } from '@/api/api';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 const Reports = () => {
   const [year, setYear] = useState(new Date().getFullYear());
