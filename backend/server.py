@@ -13,6 +13,7 @@ from datetime import datetime, timezone, timedelta
 from passlib.context import CryptContext
 import jwt
 from enum import Enum
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -39,7 +40,7 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # مؤقتًا للتأكد
+    allow_origins=["*"],   # مؤقتًا للتأكد 100%
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
