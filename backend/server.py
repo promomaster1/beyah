@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from dotenv import load_dotenv
-from starlette.middleware.cors import CORSMiddleware
+
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
@@ -39,8 +39,8 @@ origins = [
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],  # مؤقتًا للتأكد
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
