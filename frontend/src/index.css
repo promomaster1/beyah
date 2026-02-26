@@ -125,6 +125,31 @@
 
 /* Page break styles for PDF/Print */
 @media print {
+  /* Hide everything except report */
+  body * {
+    visibility: hidden;
+  }
+  
+  .print-container, .print-container * {
+    visibility: visible;
+  }
+  
+  .print-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 15mm;
+  }
+
+  /* Page breaks */
   .page-break-before {
     page-break-before: always;
     break-before: page;
@@ -139,21 +164,34 @@
     page-break-inside: avoid;
     break-inside: avoid;
   }
+
+  /* Remove shadows and backgrounds for print */
+  .print-container {
+    box-shadow: none !important;
+    background: white !important;
+  }
+
+  /* Ensure colors are preserved */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* Hide UI elements */
+  button, .no-print {
+    display: none !important;
+  }
 }
 
 /* Print container styles */
 .print-container {
   width: 100%;
+  background: white;
 }
 
-.print-container .page-break-before {
-  display: block;
-}
-
-.print-container .page-break-after {
-  display: block;
-}
-
+.print-container .page-break-before,
+.print-container .page-break-after,
 .print-container .page-break-inside-avoid {
   display: block;
 }
