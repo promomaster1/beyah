@@ -13,7 +13,7 @@ from datetime import datetime, timezone, timedelta
 from passlib.context import CryptContext
 import jwt
 from enum import Enum
-
+from fastapi.middleware.cors import CORSMiddleware
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
@@ -32,7 +32,18 @@ security = HTTPBearer()
 
 # Create the main app without a prefix
 app = FastAPI(title="EPOS API")
+origins = [
+    "https://beyah-bcqq.vercel.app",
+    "http://localhost:3000",
+]
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
