@@ -41,46 +41,50 @@ const Reports = () => {
       
       // Capture the report content as image using html2canvas
       const canvas = await html2canvas(reportRef.current, {
-        scale: 2,
+        scale: 3, // Increased scale for better quality
         useCORS: true,
         logging: false,
-        backgroundColor: '#ffffff'
+        backgroundColor: '#ffffff',
+        width: reportRef.current.scrollWidth,
+        height: reportRef.current.scrollHeight
       });
 
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
-        format: 'a4'
+        format: 'a4',
+        compress: true
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
+      
+      // Calculate dimensions to fit page width
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = 0;
+      const ratio = pdfWidth / imgWidth;
+      
+      const scaledWidth = pdfWidth;
+      const scaledHeight = imgHeight * ratio;
 
-      // Check if content needs multiple pages
-      const pageHeight = imgHeight * ratio;
-      let heightLeft = pageHeight;
       let position = 0;
+      let heightLeft = scaledHeight;
 
       // Add first page
-      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      pdf.addImage(imgData, 'PNG', 0, position, scaledWidth, scaledHeight, undefined, 'FAST');
       heightLeft -= pdfHeight;
 
       // Add additional pages if needed
       while (heightLeft > 0) {
-        position = heightLeft - pageHeight;
+        position = heightLeft - scaledHeight;
         pdf.addPage();
-        pdf.addImage(imgData, 'PNG', imgX, position, imgWidth * ratio, imgHeight * ratio);
+        pdf.addImage(imgData, 'PNG', 0, position, scaledWidth, scaledHeight, undefined, 'FAST');
         heightLeft -= pdfHeight;
       }
 
       // Save PDF
-      pdf.save(`تقرير-EPOS-${year}.pdf`);
+      pdf.save(`تقرير-جمعية-البيئة-${year}.pdf`);
       toast.success('تم توليد التقرير بنجاح! 📄');
     } catch (error) {
       console.error('PDF generation error:', error);
