@@ -14,6 +14,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadDashboard();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [year]);
 
   const loadDashboard = async () => {
