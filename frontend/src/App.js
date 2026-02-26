@@ -9,6 +9,7 @@ import Login from '@/pages/Login';
 import Dashboard from '@/pages/Dashboard';
 import AxisDetails from '@/pages/AxisDetails';
 import DataEntry from '@/pages/DataEntry';
+import ManageData from '@/pages/ManageData';
 import Targets from '@/pages/Targets';
 import Indicators from '@/pages/Indicators';
 import Reports from '@/pages/Reports';
