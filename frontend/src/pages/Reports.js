@@ -205,30 +205,30 @@ const Reports = () => {
 
         {/* Detailed Axes */}
         {reportData?.axes?.map((axisData, axisIndex) => (
-          <div key={axisData.axis.id} className="mb-8 break-inside-avoid">
-            <div className="bg-gray-100 p-4 rounded-lg mb-4">
-              <h3 className="text-xl font-bold text-gray-800">
+          <div key={axisData.axis.id} className="mb-12 break-inside-avoid">
+            <div className="bg-gray-100 p-6 rounded-xl mb-6">
+              <h3 className="text-2xl font-bold text-gray-800">
                 المحور {axisIndex + 1}: {axisData.axis.name_ar}
               </h3>
             </div>
 
             {/* Performance Indicators */}
-            <div className="mb-4">
-              <h4 className="text-lg font-semibold text-blue-700 mb-3 border-b border-blue-200 pb-2">
+            <div className="mb-6">
+              <h4 className="text-xl font-semibold text-blue-700 mb-4 border-b-2 border-blue-200 pb-3">
                 📊 مؤشرات الأداء
               </h4>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {axisData.indicators
                   ?.filter(i => i.indicator.type === 'performance')
                   ?.map((item, idx) => (
-                    <div key={item.indicator.id} className="flex justify-between items-center p-3 bg-blue-50 rounded border border-blue-100">
+                    <div key={item.indicator.id} className="flex justify-between items-center p-4 bg-blue-50 rounded-lg border border-blue-100">
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-800">{item.indicator.name_ar}</p>
-                        <p className="text-xs text-gray-600">
+                        <p className="text-base font-medium text-gray-800 mb-1">{item.indicator.name_ar}</p>
+                        <p className="text-sm text-gray-600">
                           الهدف: {item.target_value} {item.indicator.unit} | الفعلي: {item.total_actual} {item.indicator.unit}
                         </p>
                       </div>
-                      <div className={`text-lg font-bold ${
+                      <div className={`text-2xl font-bold ${
                         item.achievement_percent >= 100 ? 'text-green-600' : 
                         item.achievement_percent >= 80 ? 'text-yellow-600' : 
                         'text-red-600'
@@ -242,22 +242,22 @@ const Reports = () => {
             </div>
 
             {/* Outcome Indicators */}
-            <div className="mb-4">
-              <h4 className="text-lg font-semibold text-purple-700 mb-3 border-b border-purple-200 pb-2">
+            <div className="mb-6">
+              <h4 className="text-xl font-semibold text-purple-700 mb-4 border-b-2 border-purple-200 pb-3">
                 🎯 مؤشرات النتائج
               </h4>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {axisData.indicators
                   ?.filter(i => i.indicator.type === 'outcome')
                   ?.map((item, idx) => (
-                    <div key={item.indicator.id} className="flex justify-between items-center p-3 bg-purple-50 rounded border border-purple-100">
+                    <div key={item.indicator.id} className="flex justify-between items-center p-4 bg-purple-50 rounded-lg border border-purple-100">
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-gray-800">{item.indicator.name_ar}</p>
-                        <p className="text-xs text-gray-600">
+                        <p className="text-base font-medium text-gray-800 mb-1">{item.indicator.name_ar}</p>
+                        <p className="text-sm text-gray-600">
                           الهدف: {item.target_value} {item.indicator.unit} | الفعلي: {item.total_actual} {item.indicator.unit}
                         </p>
                       </div>
-                      <div className={`text-lg font-bold ${
+                      <div className={`text-2xl font-bold ${
                         item.achievement_percent >= 100 ? 'text-green-600' : 
                         item.achievement_percent >= 80 ? 'text-yellow-600' : 
                         'text-red-600'
