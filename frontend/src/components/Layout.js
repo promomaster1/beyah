@@ -85,27 +85,28 @@ const Layout = () => {
         <div className="flex gap-6">
           {/* Sidebar */}
           <aside className="w-64 flex-shrink-0">
-            <nav className="bg-white rounded-lg shadow-sm p-4 space-y-1">
-              {visibleNavItems.map((item) => (
+            <nav className="bg-white/80 backdrop-blur-lg rounded-lg shadow-sm p-4 space-y-1 sticky top-20">
+              {visibleNavItems.map((item, index) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center space-x-reverse space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  className={`flex items-center space-x-reverse space-x-3 px-4 py-3 rounded-lg transition-all duration-200 card-hover ${
                     isActive(item.path)
-                      ? 'bg-green-50 text-green-700 font-medium'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg scale-105'
+                      : 'text-gray-700 hover:bg-green-50 hover:text-green-700'
                   }`}
+                  style={{ animationDelay: `${index * 50}ms` }}
                   data-testid={`nav-${item.path.substring(1)}`}
                 >
                   <span className="text-xl">{item.icon}</span>
-                  <span>{item.label}</span>
+                  <span className="font-medium">{item.label}</span>
                 </Link>
               ))}
             </nav>
           </aside>
 
           {/* Main Content */}
-          <main className="flex-1 bg-white rounded-lg shadow-sm p-6">
+          <main className="flex-1 bg-white/60 backdrop-blur-sm rounded-lg shadow-sm p-6 animate-fade-in">
             <Outlet />
           </main>
         </div>
