@@ -115,8 +115,8 @@ const Dashboard = () => {
             <div className={`border-2 rounded-xl p-6 transition-all duration-300 hover:shadow-xl cursor-pointer card-hover animate-slide-up ${getStatusColor(axisData.status)}`}>
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h3 className="text-lg font-bold mb-2">{axisData.axis.name_ar}</h3>
-                  <p className="text-sm opacity-75">
+                  <h3 className="text-lg font-bold mb-2 text-gray-900">{axisData.axis.name_ar}</h3>
+                  <p className="text-sm text-gray-700">
                     {axisData.indicators_count} مؤشر
                   </p>
                 </div>
@@ -127,21 +127,25 @@ const Dashboard = () => {
 
               <div className="mt-4">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium">نسبة الإنجاز</span>
-                  <span className="text-2xl font-bold" data-testid={`axis-${index}-achievement`}>
+                  <span className="text-sm font-medium text-gray-800">نسبة الإنجاز</span>
+                  <span className="text-2xl font-bold text-gray-900" data-testid={`axis-${index}-achievement`}>
                     {axisData.achievement_percent}%
                   </span>
                 </div>
-                <div className="w-full bg-white bg-opacity-50 rounded-full h-3">
+                <div className="w-full bg-white/50 rounded-full h-3">
                   <div
-                    className="bg-current rounded-full h-3 transition-all"
+                    className={`rounded-full h-3 transition-all ${
+                      axisData.status === 'green' ? 'bg-green-600' :
+                      axisData.status === 'yellow' ? 'bg-yellow-600' :
+                      'bg-red-600'
+                    }`}
                     style={{ width: `${Math.min(axisData.achievement_percent, 100)}%` }}
                   ></div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-current border-opacity-20">
-                <span className="text-sm font-medium">
+              <div className="mt-4 pt-4 border-t border-gray-300">
+                <span className="text-sm font-medium text-gray-800">
                   الحالة: {getStatusLabel(axisData.status)}
                 </span>
               </div>
