@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getAnnualReport } from '@/api/api';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
 import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const Reports = () => {
   const [year, setYear] = useState(new Date().getFullYear());
   const [reportData, setReportData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [generating, setGenerating] = useState(false);
+  const reportRef = useRef(null);
 
   const years = [2024, 2023, 2022, 2021, 2020];
 
@@ -31,55 +33,58 @@ const Reports = () => {
   };
 
   const generatePDF = async () => {
-    if (!reportData) return;
+    if (!reportData || !reportRef.current) return;
     
     setGenerating(true);
     try {
-      // Create PDF - simple version for now
-      const doc = new jsPDF({
+      toast.info('جارٍ إنشاء التقرير...');
+      
+      // Capture the report content as image using html2canvas
+      const canvas = await html2canvas(reportRef.current, {
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        backgroundColor: '#ffffff'
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4'
       });
 
-      // Note: Arabic text in jsPDF requires special handling
-      // For now, this is a simplified version
-      
-      let yPos = 20;
-      
-      // Title
-      doc.setFontSize(20);
-      doc.text(`EPOS Annual Report ${year}`, 105, yPos, { align: 'center' });
-      
-      yPos += 15;
-      doc.setFontSize(14);
-      doc.text(`Overall Score: ${reportData.overall_score?.toFixed(1)}%`, 105, yPos, { align: 'center' });
-      
-      yPos += 20;
-      doc.setFontSize(12);
-      
-      // Add axes summary
-      reportData.axes?.forEach((axisData, index) => {
-        if (yPos > 270) {
-          doc.addPage();
-          yPos = 20;
-        }
-        
-        doc.setFontSize(14);
-        doc.text(`Axis ${index + 1}: ${axisData.axis.name_ar}`, 20, yPos);
-        yPos += 8;
-        
-        doc.setFontSize(10);
-        doc.text(`Indicators: ${axisData.indicators?.length || 0}`, 20, yPos);
-        yPos += 15;
-      });
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+      const imgX = (pdfWidth - imgWidth * ratio) / 2;
+      const imgY = 0;
+
+      // Check if content needs multiple pages
+      const pageHeight = imgHeight * ratio;
+      let heightLeft = pageHeight;
+      let position = 0;
+
+      // Add first page
+      pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+      heightLeft -= pdfHeight;
+
+      // Add additional pages if needed
+      while (heightLeft > 0) {
+        position = heightLeft - pageHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', imgX, position, imgWidth * ratio, imgHeight * ratio);
+        heightLeft -= pdfHeight;
+      }
 
       // Save PDF
-      doc.save(`EPOS-Report-${year}.pdf`);
-      toast.success('تم توليد التقرير بنجاح');
+      pdf.save(`تقرير-EPOS-${year}.pdf`);
+      toast.success('تم توليد التقرير بنجاح! 📄');
     } catch (error) {
       console.error('PDF generation error:', error);
-      toast.error('خطأ في توليد PDF');
+      toast.error('خطأ في توليد التقرير');
     } finally {
       setGenerating(false);
     }
